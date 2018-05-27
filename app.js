@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const schedule = require('node-schedule');
+const scrapeHoops = require('./src/invokers/scrape').scrapeHoops;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const port = process.env.PORT || 3000;
@@ -21,10 +23,8 @@ app.listen(port, function () {
     console.log('listening on port ' + port);
 });
 
-/*getComments();
+var j = schedule.scheduleJob('0 0 */3 * *', function () {
+    console.log('scraping');
+    scrapeHoops();
+});
 
-async function getComments() {
-    let comments = await db.getCommentsByAuthorAndComment('אשך', 'לברון');
-    console.log(comments);
-    process.exit(1);
-}*/
