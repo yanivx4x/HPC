@@ -4,7 +4,7 @@ function getComments(author, comment) {
     return new Promise((resolve, reject) => {
         var options = {
             method: 'GET',
-            uri: 'http://localhost:3000/api/getComments',
+            uri: '/api/getComments',
             qs: {
                 author: author,
                 comment: comment
