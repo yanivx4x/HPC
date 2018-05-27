@@ -4,7 +4,7 @@ function getComments(author, comment) {
     return new Promise((resolve, reject) => {
         var options = {
             method: 'GET',
-            uri: '/api/getComments',
+            uri: 'http://13.58.51.196//api/getComments',
             qs: {
                 author: author,
                 comment: comment
