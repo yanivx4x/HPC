@@ -1,8 +1,13 @@
+/*
+THIS FILE IS A PLAYGROUND
+*/
+
+
 let scrapePage = require('./openArticleInvoker').scrapePage;
 let db = require('../db/mongoClient');
 db.start();
 
-getCommonWords();
+scrapeHoops();
 
 async function getCommonWords() {
     let words = await db.getWordsByCount();
@@ -13,7 +18,7 @@ async function getCommonWords() {
 }
 
 async function scrapeHoops() {
-    for (let i = 683; i < 684; i++) {
+    for (let i = 1; i < 2; i++) {
         let url = `http://www.hoops.co.il/?paged=${i}`;
         console.log(`scraping ${i}`);
         await scrapePage({ url: url });
