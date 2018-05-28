@@ -1,6 +1,0 @@
-let scrapePage = require('./openArticleInvoker').scrapePage;
-let pageID = 1;
-for (; pageID < 10000; pageID++) {
-    let url = `http://www.hoops.co.il/?paged=${pageID}`;
-    scrapePage({ url: url });
-}

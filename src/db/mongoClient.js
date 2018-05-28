@@ -63,6 +63,33 @@ function getCommentsByAuthorAndComment(author, comment) {
     });
 }
 
+function getWordsByCount() {
+    return new Promise((resolve, reject) => {
+        let commentType = require('./models/Comment');
+        commentType.aggregate([{
+            $project: {
+                words: { $split: ["$commentText", " "] }
+            }
+        },
+        {
+            $unwind: {
+                path: "$words"
+            }
+        },
+        {
+            $group: {
+                _id: "$words",
+                count: { $sum: 1 }
+            }
+        }], function (err, results) {
+            if (err) reject(err);
+            if (results) resolve(results);
+            else resolve([]);
+        });
+
+    });
+}
+
 
 
 
@@ -71,3 +98,4 @@ module.exports.saveComment = saveComment;
 module.exports.Connection = mongoose.connection;
 module.exports.getCommentsByAuthor = getCommentsByAuthor;
 module.exports.getCommentsByAuthorAndComment = getCommentsByAuthorAndComment;
+module.exports.getWordsByCount = getWordsByCount;
