@@ -23,7 +23,8 @@ app.listen(port, function () {
     console.log('listening on port ' + port);
 });
 
-var j = schedule.scheduleJob('0 0 */3 * *', function () {
+
+var j = schedule.scheduleJob('0 0 */3 * * *', function () {
     console.log('scraping');
     scrapeHoops();
 });
