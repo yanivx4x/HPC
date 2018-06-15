@@ -16,12 +16,12 @@ function ConnectToDb() {
     })
 }
 
-function saveComment(commentText, author) {
+function saveComment(commentText, author, commentDateTime, commentUrl) {
     return new Promise((resolve, reject) => {
         let commentType = require('./models/Comment');
-        let myComment = new commentType({ commentText: commentText, author: author });
+        let myComment = new commentType({ commentText: commentText, author: author, commentDateTime: commentDateTime, commentUrl: commentUrl });
 
-        commentType.findOneAndUpdate({ commentText: commentText, author: author }, myComment, { upsert: true }, function (err, res) {
+        commentType.findOneAndUpdate({ commentText: commentText, author: author, commentDateTime: commentDateTime, commentUrl: commentUrl }, myComment, { upsert: true }, function (err, res) {
             if (err) {
                 reject(err);
             }

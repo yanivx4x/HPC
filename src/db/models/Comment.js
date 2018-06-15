@@ -10,7 +10,9 @@ autoIncrement.initialize(mainMongo.Connection);
 // create a schema
 var commentSchema = new Schema({
     commentText: String,
-    author: String
+    author: String,
+    commentDateTime: String,
+    commentUrl: String
 });
 
 
