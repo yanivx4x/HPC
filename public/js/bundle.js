@@ -76805,27 +76805,70 @@ const rp = require('request-promise');
 const Mark = require('mark.js');
 const localURL = 'http://localhost:3000/api/getComments';
 const remoteURL = 'http://hoopscommentarchive.com/api/getComments';
+const localHost = 'http://localhost:3000';
+const remoteHost = 'http://o.cksw.co:3000';
 
 function getComments(author, comment) {
-    return new Promise((resolve, reject) => {
-        var options = {
-            method: 'GET',
-            uri: remoteURL,
-            qs: {
-                author: author,
-                comment: comment
-            },
-            json: true // Automatically stringifies the body to JSON
-        };
+  return new Promise((resolve, reject) => {
+      var options = {
+          method: 'GET',
+          uri: remoteURL,
+          qs: {
+              author: author,
+              comment: comment
+          },
+          json: true // Automatically stringifies the body to JSON
+      };
 
-        rp(options)
-            .then(function (parsedBody) {
-                resolve(parsedBody);
-            })
-            .catch(function (err) {
-                alert(err);
-            });
-    });
+      rp(options)
+          .then(function (parsedBody) {
+              resolve(parsedBody);
+          })
+          .catch(function (err) {
+              alert(err);
+          });
+  });
+}
+
+function getCommenterCount(author) {
+  return new Promise((resolve, reject) => {
+      var options = {
+          method: 'GET',
+          uri: remoteHost + '/count/getCount',
+          qs: {
+              author: author
+          },
+          json: true // Automatically stringifies the body to JSON
+      };
+
+      rp(options)
+          .then(function (parsedBody) {
+              resolve(parsedBody);
+          })
+          .catch(function (err) {
+              alert(err);
+          });
+  });
+}
+
+function getAllCommentersCount() {
+  return new Promise((resolve, reject) => {
+      var options = {
+          method: 'GET',
+          uri: remoteHost + '/rankByCommenterCount/rankByCommenterCountRouter',
+          qs: {
+          },
+          json: true // Automatically stringifies the body to JSON
+      };
+
+      rp(options)
+          .then(function (parsedBody) {
+              resolve(parsedBody);
+          })
+          .catch(function (err) {
+              alert(err);
+          });
+  });
 }
 function handleComments(comments, commentContaines) {
     $table = $('#table-body');
@@ -76837,6 +76880,24 @@ function handleComments(comments, commentContaines) {
         $table.append($row);
     });
     markComments(commentContaines);
+}
+function handleCommentCount(counters) {
+    $table = $('#table-count-body');
+    $table.html('');
+    if(Array.isArray(counters)) {
+      counters.forEach(counter => {
+          $row = $('<tr> </tr>');
+          $row.append(`<td> ${counter.author} </td>`);
+          $row.append(`<td> ${counter.count} </td>`);
+          $table.append($row);
+      });
+    }
+    else {
+      $row = $('<tr> </tr>');
+      $row.append(`<td> ${counters.author} </td>`);
+      $row.append(`<td> ${counters.count} </td>`);
+      $table.append($row);
+    }
 }
 
 function markComments(keyword) {
@@ -76852,6 +76913,21 @@ $(function () {
         let author = $('#author-input').val();
         let commentContaines = $('#comment-input').val();
         getComments(author, commentContaines).then(comments => handleComments(comments, commentContaines));
+    });
+});
+
+$(function () {
+
+    let btn = document.querySelector('#search-count-btn');
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        let author = $('#author-count-input').val();
+        if(author && author != '') {
+          getCommenterCount(author).then(counters => handleCommentCount(counters));
+        }
+        else {
+          getAllCommentersCount().then(counters => handleCommentCount(counters));
+        }
     });
 });
 },{"mark.js":302,"request-promise":316}]},{},[371]);

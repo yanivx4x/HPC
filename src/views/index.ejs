@@ -46,36 +46,62 @@
         <p>Hello! here you can search old hoops comments to prove you are the GOAT.</p>
       </div>
     </div>
-    <form>
-      <div class="row">
-        <div class="six columns">
-          <label for="exampleEmailInput">Commentor name</label>
-          <input id="author-input" class="u-full-width" type="text" value="אפלטון" id="exampleEmailInput">
+    <div id="commentsSearch">
+      <form>
+        <div class="row">
+          <div class="six columns">
+            <label for="exampleEmailInput">Commentor name</label>
+            <input id="author-input" class="u-full-width" type="text" value="אפלטון" id="exampleEmailInput">
+          </div>
+          <div class="six columns">
+            <label for="exampleRecipientInput">Comment contains: (optinal)</label>
+            <input id="comment-input" class="u-full-width" type="text" value="מורי" id="exampleRecipientInput">
+          </div>
         </div>
-        <div class="six columns">
-          <label for="exampleRecipientInput">Comment contains: (optinal)</label>
-          <input id="comment-input" class="u-full-width" type="text" value="מורי" id="exampleRecipientInput">
+        <input class="button-primary" id="search-btn" type="submit" value="Search">
+        <p>Created By: Yaniv Knoll ,
+          <small>
+            <a href="https://github.com/yanivx4x/HPC">github</a>
+          </small>
+        </p>
+      </form>
+
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+      </table>
+    </div>
+    <div id="commentsCounter">
+      <form>
+        <div class="row">
+          <div class="six columns">
+            <label for="exampleEmailInput">Commentor name (optional - if empty shows all commenters)</label>
+            <input id="author-count-input" class="u-full-width" type="text" value="מנחם לס" id="exampleCountEmailInput">
+          </div>
         </div>
-      </div>
-      <input class="button-primary" id="search-btn" type="submit" value="Search">
-      <p>Created By: Yaniv Knoll ,
-        <small>
-          <a href="https://github.com/yanivx4x/HPC">github</a>
-        </small>
-      </p>
-    </form>
+        <input class="button-primary" id="search-count-btn" type="submit" value="Count">
+        <p>Created By: Yaniv Knoll , extended by p</p>
+      </form>
+      <p id="u-count-number"></p>
+      <table class="u-count-full-width">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody id="table-count-body">
 
-    <table class="u-full-width">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Comment</th>
-        </tr>
-      </thead>
-      <tbody id="table-body">
-
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- End Document

@@ -12,9 +12,13 @@ db.start();
 app.use(express.static('public'));
 
 let commentRouter = require('./src/routes/commentRouter')();
+let countRouter = require('./src/routes/countRouter')();
+let rankByCommenterCountRouter = require('./src/routes/rankByCommenterCountRouter')();
 let indexRouter = require('./src/routes/indexRouter')();
 app.use('/', indexRouter);
 app.use('/api', commentRouter);
+app.use('/count', countRouter);
+app.use('/rankByCommenterCount', rankByCommenterCountRouter);
 
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
