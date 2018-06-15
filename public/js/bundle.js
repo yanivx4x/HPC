@@ -76883,7 +76883,9 @@ function handleComments(comments, commentContaines) {
 }
 function handleCommentCount(counters) {
     $table = $('#table-count-body');
+    //  Clean the table from previous results
     $table.html('');
+    //  If it is an array (all commenters) iterate over the results and populate the array
     if(Array.isArray(counters)) {
       counters.forEach(counter => {
           $row = $('<tr> </tr>');
@@ -76892,6 +76894,7 @@ function handleCommentCount(counters) {
           $table.append($row);
       });
     }
+    //  If it is a single value, use it to populate the table
     else {
       $row = $('<tr> </tr>');
       $row.append(`<td> ${counters.author} </td>`);
@@ -76916,6 +76919,11 @@ $(function () {
     });
 });
 
+/*
+  Comments counter form submit
+  Address the server with a request for number of comment for specific author if set
+  If not set, get all counters for ALL commenters
+*/ 
 $(function () {
 
     let btn = document.querySelector('#search-count-btn');

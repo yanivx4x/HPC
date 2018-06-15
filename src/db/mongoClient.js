@@ -64,7 +64,11 @@ function getCommentsByAuthorAndComment(author, comment) {
     });
 }
 
+/*
+    This method is user to get the number of comments by a specific commenter
+*/
 function getCountByAuthor(author) {
+    //  Commenter name is saved with padding. Remove it if exists
     author = author.indexOf("\t\t\t") > -1 ? author : "\t\t\t            " + author + " ";
     return new Promise((resolve, reject) => {
         let commentType = require('./models/Comment');
@@ -77,6 +81,10 @@ function getCountByAuthor(author) {
     });
 }
 
+/*
+    This method is used to get counters for all commenters
+    It uses the distinct method to get the distinct commenters and then utilize the getCountByAuthor method
+*/
 function getCommentersList() {
     return new Promise((resolve, reject) => {
         let commentType = require('./models/Comment');
