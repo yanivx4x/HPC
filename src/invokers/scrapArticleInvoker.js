@@ -2,7 +2,20 @@ const rp = require('request-promise');
 const cheerio = require('cheerio');
 const db = require('../db/mongoClient');
 let count = 0;
-
+const hebrewMonths = [
+    'ינו',
+    'פבר',
+    'מרץ',
+    'אפר',
+    'מאי',
+    'יונ',
+    'יול',
+    'אוג',
+    'ספט',
+    'אוק',
+    'נוב',
+    'דצמ',
+]
 function saveAllCommentsFromURL({ url }) {
     return new Promise((resolve, reject) => {
         const options = {
@@ -20,17 +33,27 @@ function saveAllCommentsFromURL({ url }) {
                     let commenterName = $itemName.text().split("\n")[1];
                     let $itemComment = $(item.children[3]);
                     let comment = $itemComment.text();
-                    db.saveComment(comment, commenterName)
+                    let commentHebrewDate = $($($($(item.children[1].children[1])[0].children[5])[0]).children()[0]).text().replace('.','').replace(',','').replace(' ','-').replace(' ', '-');
+                    let commentHebrewMonth = commentHebrewDate.split('-')[1];
+                    let monthNumber = hebrewMonths.indexOf(commentHebrewMonth) + 1;
+                    monthNumber = monthNumber < 10 ? '0' + monthNumber.toString() : monthNumber.toString();
+                    let commentDate = commentHebrewDate.replace(commentHebrewMonth, monthNumber);
+                    let commentTime = $($($($(item.children[1].children[1])[0].children[5])[0]).children()[2]).text() + ":00";
+                    let commentDateTime = commentDate + 'T' + commentTime;
+                    let pageUrl = $($('.title')[1].children[0]).attr('href');
+                    let commentId = $(item).attr('id');
+                    let commentUrl = pageUrl + '#' + commentId;
+                    db.saveComment(comment, commenterName, commentDateTime, commentUrl)
                         .then((data) => {
                             console.log('saved comment!');
                             console.log(`****${count++}****`);
                             resolve();
                         })
                         .catch((err) => {
+                            console.log(err)
                             console.log('already exits!');
                             resolve();
                         });
-
                 });
 
             })
